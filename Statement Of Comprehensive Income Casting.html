@@ -20,11 +20,14 @@
   
   /* Mood themes (will be applied by JS) */
   body { 
-    font-family: 'Segoe UI', Arial, sans-serif; 
+    font-family: Inter, 'Segoe UI', system-ui, Arial, sans-serif; 
     margin: 0; 
     background: var(--bg); 
     color: var(--text); 
     transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
   
   header { 
@@ -100,19 +103,23 @@
   }
   
   input[type=number] { 
-    padding: 12px; 
+    padding: 12px 14px; 
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 10px;
     flex: 1;
     font-size: 1rem;
+    min-height: 44px;
+    font-variant-numeric: tabular-nums;
   }
   
   button { 
-    padding: 12px 20px; 
+    padding: 12px 16px; 
     cursor: pointer; 
     border: none;
-    border-radius: 4px;
-    font-weight: bold;
+    border-radius: 10px;
+    font-weight: 600; 
+    font-size: 0.95rem;
+    min-height: 44px;
     transition: all 0.2s;
   }
   
@@ -492,7 +499,14 @@
   
   @media (max-width: 768px) {
     .tabs {
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab {
+      flex: 0 0 auto;
+      min-width: 120px;
     }
     
     .input-group {
@@ -1062,6 +1076,8 @@ function init() {
   renderTable('income');
   renderTable('expense');
   updateSummary();
+  const h = (location.hash || '').replace('#','');
+  if (h && ['income','expenses','summary'].includes(h)) openTab(h);
 }
 
 // Start the app when DOM is loaded
